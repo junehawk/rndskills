@@ -5,7 +5,7 @@ import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
   site: 'https://junehawk.github.io',
-  base: '/rndskills',
+  base: '/rndskills/',
   integrations: [tailwind(), mdx(), sitemap()],
   output: 'static',
 });
