@@ -1,0 +1,23 @@
+{
+  "id": "qbio-skills",
+  "name": "qbio-skills",
+  "description": "서울대 연구자를 위한 Claude Code 스킬 모음. IRIS 과제 관리, 연구비 지출, 논문 리뷰, 장비 구매 규격서 자동 생성, 실험노트 자동 기록 등 한국 R&D 연구 행정 전반을 자동화합니다.",
+  "benefits": "IRIS 보고서 작성, 연구비 정산, 논문 심사 시뮬레이션 등 수시간짜리 반복 행정 업무를 AI 대화 몇 번으로 처리. 한국 공공 연구기관 환경에 특화된 유일한 스킬 모음.",
+  "author": "pjb7687",
+  "repository": "https://github.com/pjb7687/qbio-skills",
+  "version": "1.0.0",
+  "license": "MIT",
+  "pricing": "free",
+  "prerequisites": ["Claude Code CLI"],
+  "category": "skill",
+  "domains": ["research-admin", "academic"],
+  "tags": ["IRIS", "SRnD", "연구행정", "논문리뷰", "실험노트", "서울대", "과제관리", "연구비"],
+  "platform": "claude-code",
+  "installMethod": "skill",
+  "installCommand": "claude skill install https://github.com/pjb7687/qbio-skills",
+  "status": "active",
+  "featured": true,
+  "addedAt": "2026-03-31",
+  "updatedAt": "2026-03-31",
+  "cases": []
+}

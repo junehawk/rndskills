@@ -1,0 +1,46 @@
+## 소개
+
+korea-stats-mcp는 국가통계포털(KOSIS)의 OpenAPI를 MCP로 연결하여, Claude와의 대화 중 한국 통계 데이터를 자연어로 검색하고 분석할 수 있게 해주는 서버입니다. 통계청이 제공하는 수천 개의 통계표에 직접 접근할 수 있습니다.
+
+## 주요 기능
+
+- **통계 검색**: 키워드로 관련 통계표 탐색
+- **통계 데이터 조회**: 특정 통계표의 시계열 데이터 불러오기
+- **통계표 목록**: 특정 주제 영역의 통계표 목록 확인
+- **메타데이터 조회**: 통계 작성 기관, 주기, 최종 갱신일 등 확인
+- **키워드 검색**: 자연어 질문으로 관련 통계 자동 탐색
+
+## 사전 준비
+
+KOSIS OpenAPI 인증키가 필요합니다. [kosis.kr](https://kosis.kr)에서 회원 가입 후 OpenAPI 신청을 통해 무료로 발급받을 수 있습니다.
+
+## 설치 방법
+
+```bash
+git clone https://github.com/Dayoooun/korea-stats-mcp
+cd korea-stats-mcp
+npm install
+```
+
+MCP 설정에 추가합니다:
+
+```json
+{
+  "mcpServers": {
+    "korea-stats": {
+      "command": "node",
+      "args": ["/경로/korea-stats-mcp/index.js"],
+      "env": {
+        "KOSIS_API_KEY": "발급받은_인증키"
+      }
+    }
+  }
+}
+```
+
+## 활용 사례
+
+- 연구 제안서 작성 시 국내 현황 통계를 바로 인용
+- 정책 연구에서 다년간 시계열 데이터를 대화형으로 분석
+- 지역별·연도별 통계를 비교하여 연구 가설 검증
+- 보고서에 들어갈 통계 수치를 Claude가 자동으로 찾아 삽입

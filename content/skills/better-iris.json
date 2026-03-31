@@ -1,0 +1,23 @@
+{
+  "id": "better-iris",
+  "name": "Better IRIS",
+  "description": "IRIS 범부처통합연구지원시스템의 사용성을 개선하는 브라우저 유저스크립트. ORCID 연동으로 논문 메타데이터를 자동 입력하고 반복적인 연구실적 등록 과정을 단순화합니다.",
+  "benefits": "IRIS에 논문 실적을 등록할 때 ORCID에서 메타데이터를 자동으로 가져와 입력 시간을 대폭 단축. 연구자가 가장 불편하게 느끼는 IRIS 실적 등록 과정을 브라우저 하나로 해결.",
+  "author": "pjb7687",
+  "repository": "https://github.com/pjb7687/better-iris",
+  "version": "1.0.0",
+  "license": "MIT",
+  "pricing": "free",
+  "prerequisites": ["Tampermonkey 브라우저 확장 프로그램", "ORCID 계정"],
+  "category": "skill",
+  "domains": ["research-admin"],
+  "tags": ["IRIS", "ORCID", "연구행정", "유저스크립트", "Tampermonkey", "논문등록", "연구실적"],
+  "platform": "browser",
+  "installMethod": "userscript",
+  "installCommand": "Tampermonkey 대시보드에서 better-iris.js 스크립트 URL 추가",
+  "status": "active",
+  "featured": false,
+  "addedAt": "2026-03-31",
+  "updatedAt": "2026-03-31",
+  "cases": []
+}
