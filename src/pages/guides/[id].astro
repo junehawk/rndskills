@@ -1,0 +1,40 @@
+---
+import { getCollection } from 'astro:content';
+import DetailLayout from '../../layouts/DetailLayout.astro';
+
+export async function getStaticPaths() {
+  const guides = await getCollection('guides');
+  return guides.map((guide) => ({
+    params: { id: guide.data.id },
+    props: { guide },
+  }));
+}
+
+const { guide } = Astro.props;
+const data = guide.data;
+
+let Content: any = null;
+try {
+  const mdxFiles = import.meta.glob('../../content/guides/*.mdx');
+  const mdxPath = `../../content/guides/${data.id}.mdx`;
+  if (mdxFiles[mdxPath]) {
+    const mod = await mdxFiles[mdxPath]();
+    Content = (mod as any).default;
+  }
+} catch {}
+---
+
+<DetailLayout title={data.title} description={data.description}>
+  <article>
+    <h1 class="text-3xl font-bold text-gray-900 mb-4">{data.title}</h1>
+    <p class="text-lg text-gray-600 mb-8">{data.description}</p>
+
+    {Content ? (
+      <div class="prose prose-gray max-w-none">
+        <Content />
+      </div>
+    ) : (
+      <p class="text-gray-500">콘텐츠 준비 중입니다.</p>
+    )}
+  </article>
+</DetailLayout>

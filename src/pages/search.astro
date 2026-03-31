@@ -1,0 +1,44 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<BaseLayout title="검색" description="MCP, Skill, 가이드 통합 검색">
+  <Fragment slot="head">
+    <link href={`${base}/pagefind/pagefind-ui.css`} rel="stylesheet" />
+  </Fragment>
+
+  <div class="max-w-3xl mx-auto px-4 py-12">
+    <h1 class="text-3xl font-bold text-gray-900 mb-8">검색</h1>
+    <div id="search"></div>
+  </div>
+</BaseLayout>
+
+<script define:vars={{ base }}>
+  // Pagefind UI를 CDN(빌드 산출물)에서 동적 로드
+  const script = document.createElement('script');
+  script.src = `${base}/pagefind/pagefind-ui.js`;
+  script.onload = () => {
+    new PagefindUI({
+      element: '#search',
+      showSubResults: true,
+      translations: {
+        placeholder: 'MCP, Skill, 가이드 검색...',
+        zero_results: '검색 결과가 없습니다',
+        many_results: '{count}개의 결과',
+        one_result: '1개의 결과',
+      },
+    });
+  };
+  document.head.appendChild(script);
+</script>
+
+<style is:global>
+  .pagefind-ui__search-input {
+    @apply w-full px-4 py-3 border border-gray-300 rounded-lg text-base focus:outline-none focus:border-blue-500;
+  }
+  .pagefind-ui__result-link {
+    @apply text-blue-600 hover:underline font-medium;
+  }
+</style>

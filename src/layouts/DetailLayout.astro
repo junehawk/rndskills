@@ -1,0 +1,17 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <div class="max-w-4xl mx-auto px-4 py-8">
+    <a href={`${import.meta.env.BASE_URL}`} class="text-sm text-blue-600 hover:underline mb-4 inline-block" onclick="if(history.length>1){history.back();return false;}">&larr; 뒤로가기</a>
+    <slot />
+  </div>
+</BaseLayout>

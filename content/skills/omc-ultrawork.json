@@ -1,0 +1,22 @@
+{
+  "id": "omc-ultrawork",
+  "name": "OMC Ultrawork",
+  "description": "Claude Code에서 병렬 에이전트를 활용해 작업 속도를 극대화하는 Skill",
+  "benefits": "복잡한 코딩 작업을 여러 AI 에이전트가 동시에 처리하여 작업 시간을 크게 단축.",
+  "author": "pinkpixel",
+  "repository": "https://github.com/nicobailey-llc/oh-my-claudecode",
+  "version": "5.0.0",
+  "license": "MIT",
+  "pricing": "free",
+  "prerequisites": ["Claude Code CLI"],
+  "category": "skill",
+  "domains": ["dev-tools"],
+  "tags": ["claude-code", "병렬처리", "에이전트", "자동화"],
+  "platform": "claude-code",
+  "installMethod": "plugin",
+  "installCommand": "claude install oh-my-claudecode",
+  "status": "active",
+  "featured": false,
+  "addedAt": "2026-03-31",
+  "cases": []
+}

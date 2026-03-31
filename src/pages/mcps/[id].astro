@@ -1,0 +1,126 @@
+---
+import { getCollection } from 'astro:content';
+import DetailLayout from '../../layouts/DetailLayout.astro';
+import CopyButton from '../../components/CopyButton.astro';
+import TagList from '../../components/TagList.astro';
+import { getDomain } from '../../utils/domains';
+
+export async function getStaticPaths() {
+  const mcps = await getCollection('mcps');
+  return mcps.map((mcp) => ({
+    params: { id: mcp.data.id },
+    props: { mcp },
+  }));
+}
+
+const { mcp } = Astro.props;
+const data = mcp.data;
+
+// MDX 본문 로드 시도
+let Content: any = null;
+try {
+  const mdxFiles = import.meta.glob('../../content/mcps/*.mdx');
+  const mdxPath = `../../content/mcps/${data.id}.mdx`;
+  if (mdxFiles[mdxPath]) {
+    const mod = await mdxFiles[mdxPath]();
+    Content = (mod as any).default;
+  }
+} catch {}
+---
+
+<DetailLayout title={data.name} description={data.description}>
+  <article>
+    <div class="mb-6">
+      <div class="flex items-center gap-2 mb-2">
+        {data.pricing === 'free' && (
+          <span class="text-xs px-2 py-0.5 bg-green-100 text-green-700 rounded-full">무료</span>
+        )}
+        <span class="text-xs px-2 py-0.5 bg-blue-100 text-blue-700 rounded-full">{data.status}</span>
+        <span class="text-xs text-gray-400">v{data.version}</span>
+      </div>
+      <h1 class="text-3xl font-bold text-gray-900 mb-2">{data.name}</h1>
+      <p class="text-lg text-gray-600 mb-4">{data.description}</p>
+
+      {data.benefits && (
+        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+          <p class="text-blue-800 font-medium">&rarr; {data.benefits}</p>
+        </div>
+      )}
+    </div>
+
+    <!-- 메타 정보 -->
+    <div class="grid grid-cols-2 gap-4 mb-6 text-sm">
+      <div>
+        <span class="text-gray-500">제작자</span>
+        <p class="font-medium">{data.author}</p>
+      </div>
+      <div>
+        <span class="text-gray-500">라이선스</span>
+        <p class="font-medium">{data.license}</p>
+      </div>
+      <div>
+        <span class="text-gray-500">호환성</span>
+        <p class="font-medium">{data.compatibility.join(', ')}</p>
+      </div>
+      <div>
+        <span class="text-gray-500">저장소</span>
+        <a href={data.repository} class="font-medium text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </div>
+
+    <!-- 선행 조건 -->
+    {data.prerequisites.length > 0 && (
+      <div class="mb-6">
+        <h2 class="text-lg font-semibold text-gray-900 mb-2">필요한 것</h2>
+        <ul class="list-disc list-inside text-gray-600 space-y-1">
+          {data.prerequisites.map((p: string) => <li>{p}</li>)}
+        </ul>
+      </div>
+    )}
+
+    <!-- 설치 -->
+    <div class="mb-6">
+      <h2 class="text-lg font-semibold text-gray-900 mb-2">설치 방법</h2>
+      <CopyButton text={data.installCommand} />
+    </div>
+
+    <!-- 제공 도구 -->
+    {data.tools.length > 0 && (
+      <div class="mb-6">
+        <h2 class="text-lg font-semibold text-gray-900 mb-2">제공 도구</h2>
+        <div class="flex flex-wrap gap-2">
+          {data.tools.map((tool: string) => (
+            <code class="text-sm px-2 py-1 bg-gray-100 rounded">{tool}</code>
+          ))}
+        </div>
+      </div>
+    )}
+
+    <!-- 도메인 & 태그 -->
+    <div class="mb-6">
+      <h2 class="text-lg font-semibold text-gray-900 mb-2">분류</h2>
+      <div class="flex flex-wrap gap-2 mb-2">
+        {data.domains.map((domainId: string) => {
+          const domain = getDomain(domainId);
+          return domain ? (
+            <a
+              href={`${import.meta.env.BASE_URL}domains/${domain.id}/`}
+              class="text-sm px-3 py-1 rounded-full"
+              style={`background-color: ${domain.color}15; color: ${domain.color};`}
+            >
+              {domain.name}
+            </a>
+          ) : null;
+        })}
+      </div>
+      <TagList tags={data.tags} />
+    </div>
+
+    <!-- MDX 본문 -->
+    {Content && (
+      <div class="prose prose-gray max-w-none mt-8 pt-8 border-t border-gray-200">
+        <Content />
+      </div>
+    )}
+  </article>
+</DetailLayout>

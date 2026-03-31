@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://junehawk.github.io/rndskills/sitemap-index.xml

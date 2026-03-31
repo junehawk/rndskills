@@ -1,0 +1,68 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroExplainer from '../components/HeroExplainer.astro';
+import Card from '../components/Card.astro';
+import DomainGrid from '../components/DomainGrid.astro';
+import { getCollection } from 'astro:content';
+
+const allMcps = await getCollection('mcps');
+const allSkills = await getCollection('skills');
+
+const featured = [
+  ...allMcps.filter((m) => m.data.featured),
+  ...allSkills.filter((s) => s.data.featured),
+];
+
+const recent = [...allMcps, ...allSkills]
+  .sort((a, b) => new Date(b.data.addedAt).getTime() - new Date(a.data.addedAt).getTime())
+  .slice(0, 6);
+---
+
+<BaseLayout title="R&D MCP Hub">
+  <HeroExplainer />
+
+  <!-- 추천 항목 -->
+  {featured.length > 0 && (
+    <section class="max-w-6xl mx-auto px-4 py-12">
+      <h2 class="text-2xl font-bold text-gray-900 mb-6">추천</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {featured.map((item) => (
+          <Card
+            title={item.data.name}
+            description={item.data.description}
+            benefits={item.data.benefits}
+            href={`${import.meta.env.BASE_URL}${item.data.category === 'mcp' ? 'mcps' : 'skills'}/${item.data.id}/`}
+            domains={item.data.domains}
+            tags={item.data.tags}
+            pricing={item.data.pricing}
+          />
+        ))}
+      </div>
+    </section>
+  )}
+
+  <!-- 도메인별 바로가기 -->
+  <section class="max-w-6xl mx-auto px-4 py-12">
+    <h2 class="text-2xl font-bold text-gray-900 mb-6">R&D 도메인별 탐색</h2>
+    <DomainGrid />
+  </section>
+
+  <!-- 최근 등록 -->
+  {recent.length > 0 && (
+    <section class="max-w-6xl mx-auto px-4 py-12">
+      <h2 class="text-2xl font-bold text-gray-900 mb-6">최근 등록</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {recent.map((item) => (
+          <Card
+            title={item.data.name}
+            description={item.data.description}
+            href={`${import.meta.env.BASE_URL}${item.data.category === 'mcp' ? 'mcps' : 'skills'}/${item.data.id}/`}
+            domains={item.data.domains}
+            tags={item.data.tags}
+            pricing={item.data.pricing}
+          />
+        ))}
+      </div>
+    </section>
+  )}
+</BaseLayout>

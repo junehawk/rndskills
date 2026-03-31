@@ -1,0 +1,55 @@
+---
+import { getCollection } from 'astro:content';
+import ListLayout from '../../layouts/ListLayout.astro';
+
+const allCases = await getCollection('cases');
+const cases = allCases.sort((a, b) => new Date(b.data.addedAt).getTime() - new Date(a.data.addedAt).getTime());
+
+const typeLabel: Record<string, string> = {
+  blog: '블로그',
+  video: '영상',
+  paper: '논문',
+  tutorial: '튜토리얼',
+};
+const typeIcon: Record<string, string> = {
+  blog: '📝',
+  video: '🎬',
+  paper: '📄',
+  tutorial: '📚',
+};
+---
+
+<ListLayout title="활용 사례" description="MCP와 Skill을 실제 연구/업무에 활용한 사례 모음">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    {cases.map((c) => (
+      <a
+        href={c.data.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="block bg-white rounded-lg border border-gray-200 p-5 hover:border-blue-300 hover:shadow-md transition-all"
+      >
+        <div class="flex items-start gap-3">
+          <span class="text-2xl">{typeIcon[c.data.type] || '📝'}</span>
+          <div>
+            <div class="flex items-center gap-2 mb-1">
+              <h3 class="font-semibold text-gray-900">{c.data.title}</h3>
+              <span class="text-xs px-2 py-0.5 bg-gray-100 text-gray-600 rounded-full">
+                {typeLabel[c.data.type]}
+              </span>
+            </div>
+            <p class="text-sm text-gray-500">by {c.data.author}</p>
+          </div>
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-400 ml-auto shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+            <polyline points="15 3 21 3 21 9" />
+            <line x1="10" y1="14" x2="21" y2="3" />
+          </svg>
+        </div>
+      </a>
+    ))}
+  </div>
+
+  {cases.length === 0 && (
+    <p class="text-center text-gray-500 py-12">아직 등록된 사례가 없습니다.</p>
+  )}
+</ListLayout>

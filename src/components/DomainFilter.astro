@@ -1,0 +1,59 @@
+---
+import { getActiveDomains } from '../utils/domains';
+
+interface Props {
+  currentDomain?: string;
+  basePath: string;
+}
+
+const { currentDomain, basePath } = Astro.props;
+const activeDomains = getActiveDomains();
+---
+
+<div class="flex flex-wrap gap-2 mb-6">
+  <a
+    href={basePath}
+    data-domain-filter="all"
+    class:list={[
+      'text-sm px-3 py-1.5 rounded-full border transition-colors',
+      !currentDomain
+        ? 'bg-blue-600 text-white border-blue-600'
+        : 'bg-white text-gray-600 border-gray-200 hover:border-blue-300',
+    ]}
+  >
+    전체
+  </a>
+  {activeDomains.map((domain) => (
+    <a
+      href={`${basePath}?domain=${domain.id}`}
+      data-domain-filter={domain.id}
+      data-domain-color={domain.color}
+      class:list={[
+        'text-sm px-3 py-1.5 rounded-full border transition-colors',
+        currentDomain === domain.id
+          ? 'text-white border-transparent'
+          : 'bg-white text-gray-600 border-gray-200 hover:border-blue-300',
+      ]}
+      style={currentDomain === domain.id ? `background-color: ${domain.color}; border-color: ${domain.color};` : ''}
+    >
+      {domain.name}
+    </a>
+  ))}
+</div>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const domain = params.get('domain');
+  if (domain) {
+    document.querySelectorAll('[data-domain-filter]').forEach(el => {
+      el.classList.remove('bg-blue-600', 'text-white', 'border-blue-600');
+      el.classList.add('bg-white', 'text-gray-600', 'border-gray-200');
+    });
+    const active = document.querySelector(`[data-domain-filter="${domain}"]`);
+    if (active) {
+      active.classList.remove('bg-white', 'text-gray-600', 'border-gray-200');
+      active.classList.add('text-white', 'border-transparent');
+      (active as HTMLElement).style.backgroundColor = (active as HTMLElement).dataset.domainColor || '#3B82F6';
+    }
+  }
+</script>

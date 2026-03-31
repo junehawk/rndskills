@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="소개" description="R&D MCP Hub 소개 및 큐레이션 기준">
+  <div class="max-w-3xl mx-auto px-4 py-12 prose prose-gray">
+    <h1>소개</h1>
+
+    <h2>R&D MCP Hub란?</h2>
+    <p>
+      국내 R&D 연구자들이 AI 도구(Claude 등)를 연구에 효과적으로 활용할 수 있도록,
+      유용한 MCP 서버와 Skill을 발굴하고 한국어로 소개하는 큐레이션 사이트입니다.
+    </p>
+
+    <h2>운영 주체</h2>
+    <p>
+      KISTI 소속 연구자가 개인 프로젝트로 운영하고 있습니다.
+      AI 도구를 직접 연구 업무에 활용하면서 느낀 필요에서 시작했습니다.
+    </p>
+
+    <h2>큐레이션 기준</h2>
+    <p>이 사이트에 등록되는 MCP/Skill은 다음 기준을 충족합니다:</p>
+    <ul>
+      <li><strong>오픈소스 또는 명확한 라이선스</strong> — 기관에서 사용 가능한지 판단할 수 있어야 합니다</li>
+      <li><strong>한국 R&D에 실질적 유용성</strong> — 국내 연구 환경에서 실제로 도움이 되는 도구만 포함합니다</li>
+      <li><strong>직접 테스트 완료</strong> — 등록 전 설치와 기본 기능을 직접 검증합니다</li>
+      <li><strong>보안 관점에서 명백한 위험 없음</strong> — 악성 코드나 불필요한 데이터 수집이 없어야 합니다</li>
+    </ul>
+
+    <h2>"추천" 선정 기준</h2>
+    <p>
+      홈페이지 추천(featured) 항목은 직접 사용 경험이 있고,
+      R&D 적합성과 완성도가 높은 도구를 선정합니다.
+    </p>
+
+    <h2>연락처</h2>
+    <ul>
+      <li>GitHub Issues: <a href="https://github.com/junehawk/rndskills/issues">github.com/junehawk/rndskills</a></li>
+      <li>새로운 MCP/Skill 제보도 GitHub Issue로 받고 있습니다</li>
+    </ul>
+  </div>
+</BaseLayout>

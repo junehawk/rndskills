@@ -1,0 +1,48 @@
+---
+import { getCollection } from 'astro:content';
+import ListLayout from '../../layouts/ListLayout.astro';
+
+const allGuides = await getCollection('guides');
+const guides = allGuides.sort((a, b) => a.data.order - b.data.order);
+
+const difficultyLabel: Record<string, string> = {
+  beginner: '입문',
+  intermediate: '중급',
+  advanced: '고급',
+};
+const difficultyColor: Record<string, string> = {
+  beginner: 'bg-green-100 text-green-700',
+  intermediate: 'bg-yellow-100 text-yellow-700',
+  advanced: 'bg-red-100 text-red-700',
+};
+---
+
+<ListLayout title="시작하기" description="AI 도구를 처음 접하는 연구자를 위한 단계별 가이드">
+  <div class="space-y-4">
+    {guides.map((guide, i) => (
+      <a
+        href={`${import.meta.env.BASE_URL}guides/${guide.data.id}/`}
+        class="block bg-white rounded-lg border border-gray-200 p-5 hover:border-blue-300 hover:shadow-md transition-all"
+      >
+        <div class="flex items-center gap-3">
+          <span class="flex items-center justify-center w-8 h-8 bg-blue-100 text-blue-700 rounded-full font-bold text-sm">
+            {i + 1}
+          </span>
+          <div class="flex-1">
+            <div class="flex items-center gap-2 mb-1">
+              <h3 class="font-semibold text-gray-900">{guide.data.title}</h3>
+              <span class={`text-xs px-2 py-0.5 rounded-full ${difficultyColor[guide.data.difficulty]}`}>
+                {difficultyLabel[guide.data.difficulty]}
+              </span>
+            </div>
+            <p class="text-sm text-gray-600">{guide.data.description}</p>
+          </div>
+        </div>
+      </a>
+    ))}
+  </div>
+
+  {guides.length === 0 && (
+    <p class="text-center text-gray-500 py-12">아직 등록된 가이드가 없습니다.</p>
+  )}
+</ListLayout>

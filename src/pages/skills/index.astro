@@ -1,0 +1,51 @@
+---
+import { getCollection } from 'astro:content';
+import ListLayout from '../../layouts/ListLayout.astro';
+import Card from '../../components/Card.astro';
+import DomainFilter from '../../components/DomainFilter.astro';
+
+const allSkills = await getCollection('skills');
+const skills = allSkills.sort((a, b) => {
+  if (a.data.featured && !b.data.featured) return -1;
+  if (!a.data.featured && b.data.featured) return 1;
+  return new Date(b.data.addedAt).getTime() - new Date(a.data.addedAt).getTime();
+});
+---
+
+<ListLayout title="Skills" description="Claude Code에서 활용할 수 있는 AI Skill 모음">
+  <DomainFilter basePath={`${import.meta.env.BASE_URL}skills/`} />
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="skill-list">
+    {skills.map((skill) => (
+      <div data-domains={skill.data.domains.join(',')}>
+        <Card
+          title={skill.data.name}
+          description={skill.data.description}
+          benefits={skill.data.benefits}
+          href={`${import.meta.env.BASE_URL}skills/${skill.data.id}/`}
+          domains={skill.data.domains}
+          tags={skill.data.tags}
+          pricing={skill.data.pricing}
+          status={skill.data.status}
+        />
+      </div>
+    ))}
+  </div>
+
+  {skills.length === 0 && (
+    <p class="text-center text-gray-500 py-12">아직 등록된 Skill이 없습니다.</p>
+  )}
+</ListLayout>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const domain = params.get('domain');
+  if (domain) {
+    document.querySelectorAll('#skill-list > div').forEach((el) => {
+      const domains = (el as HTMLElement).dataset.domains || '';
+      if (!domains.split(',').includes(domain)) {
+        (el as HTMLElement).style.display = 'none';
+      }
+    });
+  }
+</script>

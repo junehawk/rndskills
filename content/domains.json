@@ -1,0 +1,101 @@
+[
+  {
+    "id": "law-policy",
+    "name": "법률/정책",
+    "icon": "scale",
+    "color": "#3B82F6",
+    "description": "법령, 판례, 행정해석, 정책 관련 AI 도구",
+    "priority": 1,
+    "status": "active"
+  },
+  {
+    "id": "public-data",
+    "name": "공공데이터",
+    "icon": "database",
+    "color": "#10B981",
+    "description": "공공데이터포털, 통계청, 정부 API 연계 도구",
+    "priority": 2,
+    "status": "active"
+  },
+  {
+    "id": "academic",
+    "name": "학술/논문",
+    "icon": "book-open",
+    "color": "#8B5CF6",
+    "description": "논문 검색, 학술 DB, 문헌 분석 도구",
+    "priority": 3,
+    "status": "active"
+  },
+  {
+    "id": "research-admin",
+    "name": "과제관리/연구행정",
+    "icon": "clipboard-list",
+    "color": "#F59E0B",
+    "description": "NTIS, 연구비 정산, 성과 보고서, 과제 관리 도구",
+    "priority": 4,
+    "status": "active"
+  },
+  {
+    "id": "dev-tools",
+    "name": "개발도구",
+    "icon": "wrench",
+    "color": "#6366F1",
+    "description": "코드 작성, 디버깅, 개발 생산성 도구",
+    "priority": 5,
+    "status": "upcoming"
+  },
+  {
+    "id": "bio-medical",
+    "name": "바이오/의료",
+    "icon": "heart-pulse",
+    "color": "#EF4444",
+    "description": "생명과학, 의료, 바이오인포매틱스 도구",
+    "priority": 6,
+    "status": "upcoming"
+  },
+  {
+    "id": "materials",
+    "name": "재료/화학",
+    "icon": "flask",
+    "color": "#06B6D4",
+    "description": "재료과학, 화학, 소재 분석 도구",
+    "priority": 7,
+    "status": "upcoming"
+  },
+  {
+    "id": "environment",
+    "name": "환경/에너지",
+    "icon": "leaf",
+    "color": "#22C55E",
+    "description": "환경 데이터, 에너지, 기후 관련 도구",
+    "priority": 8,
+    "status": "upcoming"
+  },
+  {
+    "id": "patent",
+    "name": "특허/지재권",
+    "icon": "file-badge",
+    "color": "#A855F7",
+    "description": "KIPRIS, 특허 검색, 지적재산권 분석 도구",
+    "priority": 9,
+    "status": "upcoming"
+  },
+  {
+    "id": "automation",
+    "name": "자동화",
+    "icon": "bot",
+    "color": "#64748B",
+    "description": "워크플로우 자동화, 반복 작업 효율화 도구",
+    "priority": 10,
+    "status": "upcoming"
+  },
+  {
+    "id": "data-analysis",
+    "name": "데이터분석",
+    "icon": "bar-chart",
+    "color": "#EC4899",
+    "description": "데이터 분석, 시각화, 통계 처리 도구",
+    "priority": 11,
+    "status": "upcoming"
+  }
+]

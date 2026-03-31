@@ -1,0 +1,31 @@
+---
+interface Props {
+  text: string;
+  label?: string;
+}
+
+const { text, label = '복사' } = Astro.props;
+---
+
+<div class="flex items-center gap-2 bg-gray-900 text-gray-100 rounded-lg px-4 py-3 font-mono text-sm">
+  <code class="flex-1 overflow-x-auto">{text}</code>
+  <button
+    data-copy={text}
+    class="shrink-0 px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded text-xs transition-colors"
+    aria-label={label}
+  >
+    {label}
+  </button>
+</div>
+
+<script>
+  document.querySelectorAll('[data-copy]').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const text = (btn as HTMLElement).dataset.copy!;
+      await navigator.clipboard.writeText(text);
+      const original = btn.textContent;
+      btn.textContent = '복사됨!';
+      setTimeout(() => (btn.textContent = original), 1500);
+    });
+  });
+</script>

@@ -1,0 +1,54 @@
+name: 새 MCP/Skill 제보
+description: 국내 R&D에 유용한 MCP 서버나 Skill을 알려주세요
+labels: ["submission"]
+body:
+  - type: input
+    id: name
+    attributes:
+      label: 이름
+      description: MCP 서버 또는 Skill의 이름
+      placeholder: "예: Korean Law MCP"
+    validations:
+      required: true
+  - type: dropdown
+    id: category
+    attributes:
+      label: 분류
+      options:
+        - MCP 서버
+        - Skill
+    validations:
+      required: true
+  - type: input
+    id: repository
+    attributes:
+      label: 저장소 URL
+      placeholder: "https://github.com/..."
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: 설명
+      description: 이 도구가 무엇을 하는지, 왜 R&D 연구자에게 유용한지 간단히 설명해주세요
+    validations:
+      required: true
+  - type: dropdown
+    id: domain
+    attributes:
+      label: R&D 도메인
+      multiple: true
+      options:
+        - 법률/정책
+        - 공공데이터
+        - 학술/논문
+        - 과제관리/연구행정
+        - 바이오/의료
+        - 재료/화학
+        - 환경/에너지
+        - 특허/지재권
+        - 개발도구
+        - 자동화
+        - 데이터분석
+    validations:
+      required: true

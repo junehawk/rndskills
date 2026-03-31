@@ -1,0 +1,52 @@
+---
+import { getCollection } from 'astro:content';
+import ListLayout from '../../layouts/ListLayout.astro';
+import Card from '../../components/Card.astro';
+import DomainFilter from '../../components/DomainFilter.astro';
+
+const allMcps = await getCollection('mcps');
+const mcps = allMcps.sort((a, b) => {
+  if (a.data.featured && !b.data.featured) return -1;
+  if (!a.data.featured && b.data.featured) return 1;
+  return new Date(b.data.addedAt).getTime() - new Date(a.data.addedAt).getTime();
+});
+---
+
+<ListLayout title="MCP 서버" description="AI 도구에 연결하여 외부 데이터와 서비스를 활용할 수 있는 MCP 서버 모음">
+  <DomainFilter basePath={`${import.meta.env.BASE_URL}mcps/`} />
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="mcp-list">
+    {mcps.map((mcp) => (
+      <div data-domains={mcp.data.domains.join(',')} data-tags={mcp.data.tags.join(',')}>
+        <Card
+          title={mcp.data.name}
+          description={mcp.data.description}
+          benefits={mcp.data.benefits}
+          href={`${import.meta.env.BASE_URL}mcps/${mcp.data.id}/`}
+          domains={mcp.data.domains}
+          tags={mcp.data.tags}
+          pricing={mcp.data.pricing}
+          status={mcp.data.status}
+        />
+      </div>
+    ))}
+  </div>
+
+  {mcps.length === 0 && (
+    <p class="text-center text-gray-500 py-12">아직 등록된 MCP 서버가 없습니다.</p>
+  )}
+</ListLayout>
+
+<script>
+  // 클라이언트 사이드 도메인 필터링
+  const params = new URLSearchParams(window.location.search);
+  const domain = params.get('domain');
+  if (domain) {
+    document.querySelectorAll('#mcp-list > div').forEach((el) => {
+      const domains = (el as HTMLElement).dataset.domains || '';
+      if (!domains.split(',').includes(domain)) {
+        (el as HTMLElement).style.display = 'none';
+      }
+    });
+  }
+</script>

@@ -1,0 +1,79 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Card from '../../components/Card.astro';
+import { getDomain, getActiveDomains } from '../../utils/domains';
+
+export async function getStaticPaths() {
+  const activeDomains = getActiveDomains();
+  return activeDomains.map((domain) => ({
+    params: { id: domain.id },
+    props: { domain },
+  }));
+}
+
+const { domain } = Astro.props;
+
+const allMcps = await getCollection('mcps');
+const allSkills = await getCollection('skills');
+
+const mcps = allMcps.filter((m) => m.data.domains.includes(domain.id));
+const skills = allSkills.filter((s) => s.data.domains.includes(domain.id));
+---
+
+<BaseLayout title={domain.name} description={domain.description}>
+  <div class="max-w-6xl mx-auto px-4 py-8">
+    <div class="mb-8">
+      <div
+        class="inline-flex items-center justify-center w-12 h-12 rounded-full mb-3 text-xl font-bold"
+        style={`background-color: ${domain.color}15; color: ${domain.color};`}
+      >
+        {domain.name.charAt(0)}
+      </div>
+      <h1 class="text-3xl font-bold text-gray-900 mb-2">{domain.name}</h1>
+      <p class="text-gray-600">{domain.description}</p>
+    </div>
+
+    {mcps.length > 0 && (
+      <section class="mb-10">
+        <h2 class="text-xl font-semibold text-gray-900 mb-4">MCP 서버</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {mcps.map((mcp) => (
+            <Card
+              title={mcp.data.name}
+              description={mcp.data.description}
+              benefits={mcp.data.benefits}
+              href={`${import.meta.env.BASE_URL}mcps/${mcp.data.id}/`}
+              domains={mcp.data.domains}
+              tags={mcp.data.tags}
+              pricing={mcp.data.pricing}
+            />
+          ))}
+        </div>
+      </section>
+    )}
+
+    {skills.length > 0 && (
+      <section class="mb-10">
+        <h2 class="text-xl font-semibold text-gray-900 mb-4">Skills</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {skills.map((skill) => (
+            <Card
+              title={skill.data.name}
+              description={skill.data.description}
+              benefits={skill.data.benefits}
+              href={`${import.meta.env.BASE_URL}skills/${skill.data.id}/`}
+              domains={skill.data.domains}
+              tags={skill.data.tags}
+              pricing={skill.data.pricing}
+            />
+          ))}
+        </div>
+      </section>
+    )}
+
+    {mcps.length === 0 && skills.length === 0 && (
+      <p class="text-center text-gray-500 py-12">이 도메인에 등록된 도구가 아직 없습니다.</p>
+    )}
+  </div>
+</BaseLayout>

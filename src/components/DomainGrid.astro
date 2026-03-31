@@ -1,0 +1,37 @@
+---
+import { getAllDomains } from '../utils/domains';
+
+const domains = getAllDomains();
+---
+
+<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+  {domains.map((domain) => (
+    domain.status === 'active' ? (
+      <a
+        href={`${import.meta.env.BASE_URL}domains/${domain.id}/`}
+        class="flex flex-col items-center gap-2 p-4 rounded-lg border text-center transition-all border-gray-200 hover:border-blue-300 hover:shadow-sm cursor-pointer"
+      >
+        <div
+          class="w-10 h-10 rounded-full flex items-center justify-center text-lg"
+          style={`background-color: ${domain.color}15; color: ${domain.color};`}
+        >
+          <span class="font-bold text-sm">{domain.name.charAt(0)}</span>
+        </div>
+        <span class="text-sm font-medium text-gray-700">{domain.name}</span>
+      </a>
+    ) : (
+      <div class="flex flex-col items-center gap-2 p-4 rounded-lg border text-center border-gray-100 opacity-50 cursor-default">
+        <div
+          class="w-10 h-10 rounded-full flex items-center justify-center text-lg"
+          style={`background-color: ${domain.color}15; color: ${domain.color};`}
+        >
+          <span class="font-bold text-sm">{domain.name.charAt(0)}</span>
+        </div>
+        <span class="text-sm font-medium text-gray-700">{domain.name}</span>
+        {domain.status === 'upcoming' && (
+          <span class="text-xs text-gray-400">준비 중</span>
+        )}
+      </div>
+    )
+  ))}
+</div>
